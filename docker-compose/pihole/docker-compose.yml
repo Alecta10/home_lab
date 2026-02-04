@@ -5,17 +5,23 @@ services:
     hostname: pihole
     restart: unless-stopped
     network_mode: host
+    
     environment:
+      # Change to your own TIMEZONE
       TZ: "${TIMEZONE:-Europe/Madrid}"
-      # Usamos una variable para no mostrar tu clave real en GitHub
+      # Change to your own password
       FTLCONF_webserver_api_password: "${PIHOLE_PASSWORD}"
+      
       FTLCONF_dns_listeningMode: "ALL"
       PIHOLE_DNS_: "127.0.0.1#5335"
+      
     volumes:
       - "./etc-pihole:/etc/pihole"
       - "./etc-dnsmasq.d:/etc/dnsmasq.d"
+      
     cap_add:
       - NET_ADMIN
+      
     depends_on:
       - unbound
 
