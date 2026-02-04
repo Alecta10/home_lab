@@ -1,0 +1,28 @@
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    hostname: pihole
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      TZ: "${TIMEZONE:-Europe/Madrid}"
+      # Usamos una variable para no mostrar tu clave real en GitHub
+      FTLCONF_webserver_api_password: "${PIHOLE_PASSWORD}"
+      FTLCONF_dns_listeningMode: "ALL"
+      PIHOLE_DNS_: "127.0.0.1#5335"
+    volumes:
+      - "./etc-pihole:/etc/pihole"
+      - "./etc-dnsmasq.d:/etc/dnsmasq.d"
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - unbound
+
+  unbound:
+    image: alpinelinux/unbound:latest
+    container_name: unbound
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - "./etc-unbound:/etc/unbound"
