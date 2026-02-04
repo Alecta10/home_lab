@@ -14,9 +14,10 @@ git clone https://github.com/Alecta10/home_lab.git
 cd TU_REPO
 ```
 ### 2. Descargar Root Hints
-Unbound necesita conocer los servidores raíz del mundo para ser recursivo:
+Unbound necesita conocer los servidores raíz del mundo para ser recursivo y le añadimos permisos:
 ```Bash
 wget https://www.internic.net/domain/named.root -O ./docker-compose/unbound/root.hints
+sudo chmod 644 ./docker-compose/unbound/root.hints
 ```
 ### 3. Configurar Variables
 Copia el archivo de ejemplo y edita tu contraseña de administrador:
